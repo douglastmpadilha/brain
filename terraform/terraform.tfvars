@@ -1,0 +1,5 @@
+project_name = "brain-api"
+db_name      = "brain"
+db_username  = "brain"
+# db_password = "INSERT_PASSWORD_HERE" 
+db_password = "asd#FF12de"

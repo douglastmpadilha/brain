@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json.schemastore.org/typedoc",
+  "name": "Brain",
+  "out": "docs",
+  "exclude": [
+    "**/node_modules/**",
+    "**/*.spec.ts",
+    "src/main.ts",
+    "src/app.ts",
+    "routes/**"
+  ],
+  "entryPoints": ["src/"],
+  "entryPointStrategy": "expand",
+  "sort": ["source-order"],
+  "highlightLanguages": [
+    "typescript",
+    "tsx",
+    "css",
+    "json",
+    "jsonc",
+    "python",
+    "yaml", 
+    "bash"
+  ],
+  "markdownItOptions": {
+      "html": true
+  },
+  "readme": "README.md"
+}
