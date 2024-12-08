@@ -2,26 +2,26 @@ import { PrismaClient, Produtor } from '@prisma/client';
 import { Pagination } from '../utils/types';
 
 /**
- * Model class for handling Produtor (Producer/Farmer) database operations
+ * Classe modelo para manipulação de operações no banco de dados relacionadas ao Produtor
  * @class ProdutorModel
  */
 class ProdutorModel {
-  /** Prisma client instance for database operations */
+  /** Instância do cliente Prisma para operações no banco de dados */
   private prisma = new PrismaClient();
 
   /**
-   * Retrieves a single produtor by ID
-   * @param {string} id - The unique identifier of the produtor
-   * @returns {Promise<Produtor | null>} The produtor data or null if not found
+   * Recupera um único produtor pelo ID
+   * @param {string} id - O identificador único do produtor
+   * @returns {Promise<Produtor | null>} Os dados do produtor ou null se não encontrado
    */
   getProdutor(id: string) {
     return this.prisma.produtor.findUnique({ where: { id } });
   }
 
   /**
-   * Retrieves a paginated list of produtores
-   * @param {Pagination} pagination - The pagination parameters
-   * @returns {Promise<Produtor[]>} Array of produtor records
+   * Recupera uma lista paginada de produtores
+   * @param {Pagination} pagination - Os parâmetros de paginação
+   * @returns {Promise<Produtor[]>} Array de registros de produtores
    */
   getProdutores(pagination: Pagination) {
     return this.prisma.produtor.findMany({
@@ -31,19 +31,19 @@ class ProdutorModel {
   }
 
   /**
-   * Creates a new produtor record
-   * @param {Produtor} produtor - The produtor data to create
-   * @returns {Promise<Produtor>} The created produtor record
+   * Cria um novo registro de produtor
+   * @param {Produtor} produtor - Os dados do produtor a serem criados
+   * @returns {Promise<Produtor>} O registro do produtor criado
    */
   createProdutor(produtor: Produtor) {
     return this.prisma.produtor.create({ data: produtor });
   }
 
   /**
-   * Updates an existing produtor record
-   * @param {string} id - The unique identifier of the produtor
-   * @param {Partial<Produtor>} produtor - The partial produtor data to update
-   * @returns {Promise<Produtor>} The updated produtor record
+   * Atualiza um registro existente de produtor
+   * @param {string} id - O identificador único do produtor
+   * @param {Partial<Produtor>} produtor - Os dados parciais do produtor a serem atualizados
+   * @returns {Promise<Produtor>} O registro do produtor atualizado
    */
   updateProdutor(id: string, produtor: Partial<Produtor>) {
     return this.prisma.produtor.update({
@@ -53,26 +53,27 @@ class ProdutorModel {
   }
 
   /**
-   * Deletes a produtor record
-   * @param {string} id - The unique identifier of the produtor to delete
-   * @returns {Promise<Produtor>} The deleted produtor record
+   * Exclui um registro de produtor
+   * @param {string} id - O identificador único do produtor a ser excluído
+   * @returns {Promise<Produtor>} O registro do produtor excluído
    */
   deleteProdutor(id: string) {
     return this.prisma.produtor.delete({ where: { id } });
   }
 
   /**
-   * Retrieves the total count of farms
-   * @returns {Promise<{ totalFazendas: number }>} Object containing the total count of farms
+   * Recupera o número total de fazendas
+   * @returns {Promise<{ totalFazendas: number }>} Objeto contendo o número total de fazendas
    */
   async getDashboardByQuantity() {
     const count = await this.prisma.produtor.count();
+
     return { totalFazendas: count };
   }
 
   /**
-   * Calculates the total area of all farms
-   * @returns {Promise<{ totalArea: number | null }>} Object containing the sum of all farm areas
+   * Calcula a área total de todas as fazendas
+   * @returns {Promise<{ totalArea: number | null }>} Objeto contendo a soma de todas as áreas das fazendas
    */
   async getDashboardByArea() {
     const totalArea = await this.prisma.produtor.aggregate({
@@ -83,9 +84,9 @@ class ProdutorModel {
   }
 
   /**
-   * Retrieves statistics about cultures (crops) across all farms
+   * Recupera estatísticas sobre culturas em todas as fazendas
    * @returns {Promise<{ totalPorCultura: Array<{ cultura: string, total: number }> }>}
-   * Object containing count of farms per culture
+   * Objeto contendo contagem de fazendas por cultura
    */
   async getDashboardByCulture() {
     const culturas = await this.prisma.produtor.findMany({
@@ -106,9 +107,9 @@ class ProdutorModel {
   }
 
   /**
-   * Calculates the percentage distribution of soil usage (agricultural vs vegetation)
+   * Calcula a distribuição percentual do uso do solo (agrícola vs vegetação)
    * @returns {Promise<{ totalPorSolo: { areaAgricola: string, areaVegetacao: string } }>}
-   * Object containing percentages of agricultural and vegetation areas
+   * Objeto contendo percentuais de áreas agrícolas e de vegetação
    */
   async getDashboardBySoil() {
     const totalArea = await this.prisma.produtor.aggregate({
@@ -132,9 +133,9 @@ class ProdutorModel {
   }
 
   /**
-   * Retrieves statistics about farm distribution across states
+   * Recupera estatísticas sobre a distribuição de fazendas por estados
    * @returns {Promise<{ totalPorEstado: Array<{ estado: string, _count: { _all: number } }> }>}
-   * Object containing count of farms per state
+   * Objeto contendo contagem de fazendas por estado
    */
   async getDashboardByState() {
     const totalPorEstado = await this.prisma.produtor.groupBy({

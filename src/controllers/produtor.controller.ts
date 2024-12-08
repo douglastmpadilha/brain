@@ -5,15 +5,15 @@ import { HttpException } from '../utils/errors';
 import { Pagination, DashboardType } from '../utils/types';
 
 /**
- * Controller class for handling Produtor (Producer/Farmer) business logic
+ * Classe controladora para manipulação da lógica de negócios do Produtor
  * @class ProdutorController
  */
 class ProdutorController {
-  /** Instance of ProdutorModel for database operations */
+  /** Instância do ProdutorModel para operações no banco de dados */
   private produtorModel = new ProdutorModel();
 
   /**
-   * Creates an instance of ProdutorController
+   * Cria uma instância do ProdutorController
    * @constructor
    */
   constructor() {
@@ -21,10 +21,10 @@ class ProdutorController {
   }
 
   /**
-   * Retrieves a single produtor by ID
-   * @param {string} id - The unique identifier of the produtor
-   * @throws {HttpException} When produtor is not found
-   * @returns {Promise<Produtor>} The produtor data
+   * Recupera um único produtor pelo ID
+   * @param {string} id - O identificador único do produtor
+   * @throws {HttpException} Quando o produtor não é encontrado
+   * @returns {Promise<Produtor>} Os dados do produtor
    */
   async getProdutor(id: string) {
     const produtor = await this.produtorModel.getProdutor(id);
@@ -37,19 +37,19 @@ class ProdutorController {
   }
 
   /**
-   * Retrieves a paginated list of produtores
-   * @param {Pagination} pagination - The pagination parameters
-   * @returns {Promise<Produtor[]>} Array of produtor records
+   * Recupera uma lista paginada de produtores
+   * @param {Pagination} pagination - Os parâmetros de paginação
+   * @returns {Promise<Produtor[]>} Array de registros de produtores
    */
   getProdutores(pagination: Pagination) {
     return this.produtorModel.getProdutores(pagination);
   }
 
   /**
-   * Creates a new produtor record after validation
-   * @param {Produtor} produtor - The produtor data to create
-   * @throws {HttpException} When CPF/CNPJ is invalid or area validation fails
-   * @returns {Promise<Produtor>} The created produtor record
+   * Cria um novo registro de produtor após validação
+   * @param {Produtor} produtor - Os dados do produtor a serem criados
+   * @throws {HttpException} Quando CPF/CNPJ é inválido ou a validação de área falha
+   * @returns {Promise<Produtor>} O registro do produtor criado
    */
   createProdutor(produtor: Produtor) {
     if (!this.validateCpfCnpj(produtor.cpfCnpj)) {
@@ -62,27 +62,27 @@ class ProdutorController {
   }
 
   /**
-   * Updates an existing produtor record
-   * @param {string} id - The unique identifier of the produtor
-   * @param {Partial<Produtor>} produtor - The partial produtor data to update
-   * @returns {Promise<Produtor>} The updated produtor record
+   * Atualiza um registro existente de produtor
+   * @param {string} id - O identificador único do produtor
+   * @param {Partial<Produtor>} produtor - Os dados parciais do produtor a serem atualizados
+   * @returns {Promise<Produtor>} O registro do produtor atualizado
    */
   updateProdutor(id: string, produtor: Partial<Produtor>) {
     return this.produtorModel.updateProdutor(id, produtor);
   }
 
   /**
-   * Deletes a produtor record
-   * @param {string} id - The unique identifier of the produtor to delete
-   * @returns {Promise<Produtor>} The deleted produtor record
+   * Exclui um registro de produtor
+   * @param {string} id - O identificador único do produtor a ser excluído
+   * @returns {Promise<Produtor>} O registro do produtor excluído
    */
   deleteProdutor(id: string) {
     return this.produtorModel.deleteProdutor(id);
   }
 
   /**
-   * Retrieves all dashboard data
-   * @returns {Promise<Array<any>>} Array containing all dashboard statistics
+   * Recupera todos os dados do dashboard
+   * @returns {Promise<Array<any>>} Array contendo todas as estatísticas do dashboard
    */
   async getDashboards() {
     const dashboardHandler = {
@@ -103,9 +103,9 @@ class ProdutorController {
   }
 
   /**
-   * Validates CPF or CNPJ number
-   * @param {string} cpfCnpj - The CPF or CNPJ number to validate
-   * @returns {boolean} True if valid, false otherwise
+   * Valida número de CPF ou CNPJ
+   * @param {string} cpfCnpj - O número de CPF ou CNPJ a ser validado
+   * @returns {boolean} Verdadeiro se válido, falso caso contrário
    * @private
    */
   private validateCpfCnpj(cpfCnpj: string) {
@@ -113,8 +113,8 @@ class ProdutorController {
   }
 
   /**
-   * Validates farm area calculations
-   * @param {Produtor} produtor - The produtor data to validate
+   * Valida os cálculos de área da fazenda
+   * @param {Produtor} produtor - Os dados do produtor a serem validados
    * @private
    */
   private validateArea(produtor: Produtor) {
